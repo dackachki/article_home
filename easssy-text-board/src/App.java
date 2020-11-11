@@ -3,14 +3,17 @@ import java.util.Scanner;
 import Container.Container;
 import Controller.ArticleController;
 import Controller.MemberController;
+import dao.ConnectDB;
 
 public class App {
 	MemberController memberController;
 	ArticleController articleController;
+	ConnectDB connectDB;
 
 	public void run() {
 		memberController = new MemberController();
 		articleController = new ArticleController();
+		connectDB = new ConnectDB();
 			Scanner sc = Container.sc;
 			
 			while (true) {

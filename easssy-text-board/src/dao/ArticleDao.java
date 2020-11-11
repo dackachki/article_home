@@ -101,8 +101,6 @@ public class ArticleDao {
 		
 		return null;
 	}
-	public List<Article> selectedArticles(){
-		return articlesByBoard;
-	}
+	
 	
 }
