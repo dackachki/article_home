@@ -8,7 +8,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
+import Container.Container;
 import dto.Article;
 
 public class ConnectDB {
@@ -17,41 +19,37 @@ public class ConnectDB {
 	PreparedStatement pstmt;
 	ResultSet rs;
 	Statement stmt;
-	ArticleDao articleDao;
-	Article article = new Article();
+	
+	Scanner sc;
+	
 	
 	public ConnectDB() {
-		ArrayList<Article> articles = new ArrayList<>();
-		
+	
+				
 		try {
 			Class.forName(driver);
-			con = DriverManager.getConnection("jdbc:mariadb://127.0.0.1:3306/a1", "namsw", "ska78");
+			con = DriverManager.getConnection("jdbc:mariadb://127.0.0.1:3306/a2", "sbsst", "sbs123414");
 
-			// DB와 연결된 conn 객체로부터 Statement 객체 획득.
+			
 			stmt = con.createStatement();
 
-			String sql = ("select * from article;");
-			// query문 날리기
+			String sql = ("select * from article limit 3;");
+			
 			pstmt = con.prepareStatement(sql.toString());
 			stmt.execute(sql);
 			rs =pstmt.executeQuery();
 			
 			
-				System.out.println("번호/           날짜         / 작성자 /    제목    /조회수");
 			while (rs.next()) {
 				int index = 1;
 				int id = rs.getInt(index++);
 				String date = rs.getString(index++);
 				String writer = rs.getString(index++);
 				String title = rs.getString(index++);
+				String body = rs.getString(index++);
 				int hit = rs.getInt(index++);
-				System.out.printf("%d / %s / %s / %s / %d\n",id,date,writer,title,hit);
-				id = article.article_Index;
-				date = article.date;
-				writer = article.write;
-				title = article.title;
-				hit = article.hit;
-				articles.add(article);
+				System.out.printf("%d / %s / %s / %s / %s  / %d\n",id,date,writer,body,title,hit);
+			
 			}
 			
 			
@@ -65,18 +63,18 @@ public class ConnectDB {
 			
 		
 		} catch (ClassNotFoundException e) {
-			System.out.println("드라이버 로드 실패"+e);
+			System.out.println("�뱶�씪�씠踰� 濡쒕뱶 �떎�뙣"+e);
 		} catch (SQLException e) {
-			System.out.println("DB 접속 실패");
+			System.out.println("DB �젒�냽 �떎�뙣");
 			e.printStackTrace();
 		}
 		
 	}
-	
-	
 
+	
 	public static void main(String[] args) {
 		ConnectDB connectDB = new ConnectDB();
+		
 	}
 
 }

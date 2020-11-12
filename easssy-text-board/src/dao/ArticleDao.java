@@ -2,7 +2,7 @@ package dao;
 
 import java.util.ArrayList;
 import java.util.List;
-
+import java.sql.*;
 import Container.Container;
 import dto.Article;
 import dto.Board;
@@ -25,7 +25,59 @@ public class ArticleDao {
 		boardid = Container.session.boardid;
 		
 	}
+	public List<Article> getArticles() {
+
+		List<Article> articles = new ArrayList<>();
+
+		String dbmsJdbcUrl = "jdbc:mysql://127.0.0.1:3306/a2?useUnicode=true&characterEncoding=utf8&autoReconnect=true&serverTimezone=Asia/Seoul&useOldAliasMetadataBehavior=true&zeroDateTimeNehavior=convertToNull";
+		String dbmsLoginId = "sbsst";
+		String dbmsLoginPw = "sbs123414";
+
+		// 기사 등록
+		
+
+		// 연결 생성
+		Connection con = null;
+		try {
+			con = DriverManager.getConnection(dbmsJdbcUrl, dbmsLoginId, dbmsLoginPw);
+			Statement stmt = null;
+			stmt = con.createStatement();
+			String sql = ("select * from article limit 3;");
+			PreparedStatement pstmt = null;
+			pstmt = con.prepareStatement(sql.toString());
+			stmt.execute(sql);
+			ResultSet rs= pstmt.executeQuery();
+			while (rs.next()) {
+				int index = 1;
+				int id = rs.getInt(index++);
+				String date = rs.getString(index++);
+				String writer = rs.getString(index++);
+				String title = rs.getString(index++);
+				String body = rs.getString(index++);
+				int hit = rs.getInt(index++);
+				System.out.printf("%d / %s / %s / %s / %s  / %d\n",id,date,writer,body,title,hit);
+				
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			System.out.println("여기는 항상 실행됨!!");
+			try {
+				if (con != null) {
+					con.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		
+
+		
+		return articles;
+	}
 	public int add(String title, String body) {
+		
 		Article article = new Article();
 		article.title = title;
 		article.body = body;

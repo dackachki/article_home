@@ -5,6 +5,7 @@ import java.util.Scanner;
 
 import Container.Container;
 import Service.ArticleService;
+
 import dto.Article;
 import dto.Board;
 
@@ -13,6 +14,7 @@ public class ArticleController {
 
 	public ArticleController() {
 		articleService = Container.articleService;
+
 	}
 
 	public void run(Scanner sc, String cmd) {
@@ -47,14 +49,8 @@ public class ArticleController {
 			Container.session.boardid = getBoard(inputName);
 
 		} else if (cmd.equals("article list")) {
+			 getArticles();
 			
-			System.out.println("== 게시물 리스트 == ");
-			System.out.println("게시판이름  / 작성자 / 제목");
-			
-			for (int i = 0; i < articleService.getArticleSize(); i++) {
-				System.out.println("aa");
-				System.out.printf("%s  / %s   / %s\n", getBoardName(selectedArticles().get(i).boardId),getWriterName(selectedArticles().get(i).writerId), getArticle(selectedArticles().get(i).article_Index));
-			}
 		}
 
 	}
@@ -76,9 +72,8 @@ public class ArticleController {
 		return articleService.getArticle(i);
 	}
 
-	
-	public List<Article> selectedArticles(){
-		return articleService.selectedArticles();
+	public List<Article> getArticles() {
+		return articleService.getArticles();
 	}
 
 }

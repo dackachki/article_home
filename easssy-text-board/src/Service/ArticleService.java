@@ -45,8 +45,8 @@ public class ArticleService {
 	public List<Article> getArticlesByBoardId(int boardid) {
 		return articleDao.getArticlesByBoardId(boardid);
 	}
-	public List<Article> selectedArticles(){
-		return articleDao.articlesByBoard;
+	public List<Article> getArticles(){
+		return articleDao.getArticles();
 	}
 
 	
